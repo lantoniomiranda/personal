@@ -1,25 +1,25 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import  Holiday from '$lib/types/holiday';
+    import type { Holiday } from '$lib/types/holiday.d';
 
     export let holidays: Holiday[] = [];
 
     let countdown = '';
     let holidayName = '';
 
-    function getNextHoliday(holidays: Holiday[]): Holiday[] | null {
+    function getNextHoliday(holidays: Holiday[]): Holiday | null {
         const now = new Date();
-        const futureHolidays = holidays.filter(holiday => new Date(holiday.date) > now);
+        const futureHolidays: Holiday[] = holidays.filter(holiday => new Date(holiday.date) > now);
         if (futureHolidays.length === 0) return null;
         return futureHolidays.reduce((prev, curr) => (new Date(prev.date) < new Date(curr.date) ? prev : curr), futureHolidays[0]);
     }
 
     function updateCountdown() {
-        const nextHoliday: Holiday = getNextHoliday(holidays);
+        const nextHoliday: Holiday | null = getNextHoliday(holidays);
         if (nextHoliday) {
             const now = new Date();
-            const timeRemaining = new Date(nextHoliday.date) - now;
-
+            const nextHolidayDate = new Date(nextHoliday.date);
+            const timeRemaining = nextHolidayDate.getTime() - now.getTime();
             const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
