@@ -1,96 +1,66 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import github from '$lib/images/github.svg';
-	import linkedin from '$lib/images/linkedin.svg';	
-	import '../../app.css';
+	import linkedin from '$lib/images/linkedin.svg';
+	import { onMount } from 'svelte';
+
+	let time: string = '';
+
+	const getTime = () => {
+		const hours = new Date().getHours().toString().padStart(2, '0');
+		const minutes = new Date().getMinutes().toString().padStart(2, '0');
+		const seconds = new Date().getSeconds().toString().padStart(2, '0');
+		const time = `${hours}:${minutes}:${seconds}`;
+		return time;
+	};
+
+	const updateTime = () => {
+		time = getTime();
+	};
+
+	onMount(() => {
+		updateTime();
+		const interval = setInterval(updateTime, 1000);
+		return () => clearInterval(interval);
+	});
 </script>
 
-<header>
-	
-	<nav>
-		<ul>
+<header class="flex justify-between items-center text-white px-4 py-2">
+	<div class="text-xs">
+		<span>{time}</span>
+	</div>
+
+	<nav class="flex-grow">
+		<ul class="flex justify-center gap-4">
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">me</a>
+				<a href="/" class="text-lg font-bold hover:text-orange-500">yo</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/me' ? 'page' : undefined}>
+				<a href="/me" class="text-lg font-bold hover:text-orange-500">me</a>
 			</li>
 			<li aria-current={$page.url.pathname === '/projects' ? 'page' : undefined}>
-				<a href="/about">projects</a>
+				<a href="/about" class="text-lg font-bold hover:text-orange-500">dev</a>
 			</li>
 			<li aria-current={$page.url.pathname.startsWith('/blog') ? 'page' : undefined}>
-				<a href="/blog">thoughts</a>
+				<a href="/blog" class="text-lg font-bold hover:text-orange-500">thoughts</a>
 			</li>
 		</ul>
 	</nav>
 
-	<div class="corner">
-		<a href="https://linkedin.com/in/lmiranda30" target="_blank">
-			<img src={linkedin} alt="LinkedIn" />
+	<div class="flex items-center gap-2">
+		<a
+			href="https://linkedin.com/in/lmiranda30"
+			target="_blank"
+			class="flex items-center justify-center w-8 h-8 rounded-full  hover:bg-orange-500"
+		>
+			<img src={linkedin} alt="LinkedIn" class="w-6 h-6" />
 		</a>
-		<a href="https://github.com/lantoniomiranda" target="_blank">
-			<img src={github} alt="GitHub" />
+		<a
+			href="https://github.com/lantoniomiranda"
+			target="_blank"
+			class="flex items-center justify-center w-8 h-8 rounded-full hover:bg-orange-500"
+		>
+			<img src={github} alt="GitHub" class="w-6 h-6" />
 		</a>
 	</div>
 </header>
-
-<style>
-	header {
-		display: flex;
-		justify-content: space-between; 
-		align-items: center;
-		color: white; 
-		padding: 0.5rem 1rem; 
-	}
-
-	.corner {
-		display: flex;
-		gap: 0.5em;  
-		margin: 0.5em; 
-		font-size: small;
-	}
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.5em;
-		height: 2.5em;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
-	}
-
-	nav {
-		display: flex; 
-		flex: 1;  
-		justify-content: center; 
-	}
-
-	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: auto; 
-		list-style: none;
-	}
-
-	li {
-		display: inline-block; 
-		margin: 0 1rem; 
-		color: inherit; 
-		font-weight: bold; 
-	}
-
-	a {
-		text-decoration: none; 
-		color: inherit; 
-		transition: color 0.2s ease-in-out; 
-	}
-
-	a:hover {
-		color: var(--color-theme-1)
-	}
-
-	
-</style>
