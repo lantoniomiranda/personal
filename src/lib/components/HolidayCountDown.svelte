@@ -1,39 +1,21 @@
-<script>
-	import { page } from '$app/stores';
-	import '../../app.css';
+<script lang="ts">
     import { onMount } from 'svelte';
-    import { HOLIDAYS_API_KEY } from '$env/static/private'
+    import  Holiday from '$lib/types/holiday';
 
+    export let holidays: Holiday[] = [];
 
     let countdown = '';
     let holidayName = '';
 
-    async function fetchHolidays(){
-        const response = await fetch(`https://api.api-ninjas.com/v1/holidays?country=PT&year=2024&type=national_holiday`, {
-            headers: {
-                'X-Api-Key': `${HOLIDAYS_API_KEY}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch holidays');
-        }
-
-        const holidays = await response.json();
-        return holidays;
-    }
-
-    function getNextHoliday(holidays) {
+    function getNextHoliday(holidays: Holiday[]): Holiday[] | null {
         const now = new Date();
         const futureHolidays = holidays.filter(holiday => new Date(holiday.date) > now);
-        const nextHoliday = futureHolidays.reduce((prev, curr) => (new Date(prev.date) < new Date(curr.date) ? prev : curr), futureHolidays[0]);
-
-        return nextHoliday;
+        if (futureHolidays.length === 0) return null;
+        return futureHolidays.reduce((prev, curr) => (new Date(prev.date) < new Date(curr.date) ? prev : curr), futureHolidays[0]);
     }
 
     function updateCountdown() {
-        fetchHolidays().then(holidays => {
-        const nextHoliday = getNextHoliday(holidays);
+        const nextHoliday: Holiday = getNextHoliday(holidays);
         if (nextHoliday) {
             const now = new Date();
             const timeRemaining = new Date(nextHoliday.date) - now;
@@ -49,16 +31,15 @@
             countdown = 'No upcoming holidays';
             holidayName = '';
         }
-        });
     }
 
     onMount(() => {
         updateCountdown();
-        const interval = setInterval(updateCountdown, 1000000);
+        const interval = setInterval(updateCountdown, 1000);
         return () => clearInterval(interval);
     });
 
-
+    $: updateCountdown();
 </script>
 
 <section>
@@ -67,5 +48,3 @@
         <div>{countdown}</div>
     </div>
 </section>
-
-  
