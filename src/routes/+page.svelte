@@ -1,59 +1,27 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+    import { page } from '$app/stores';
+    import user from '$lib/images/user.png';
+    import HolidayCountDown from '$lib/components/HolidayCountDown.svelte';
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+    
 </svelte:head>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+<section class="flex flex-col">
+    <div class="flex justify-between items-center">
+        <img src={user} alt="User icon" class="h-32 w-32 rounded-full" />
+        <div class="text-content">
+            <p class="text-lg">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            <p class="text-lg">Nisi quas nesciunt voluptatum, vitae dicta, fuga non deserunt impedit perspiciatis, quae dolorum accusamus quos odit.</p>
+            <p class="text-lg">Tempora sit ut a saepe provident!</p>
+        </div>
+    </div>
+    <div class="flex justify-center">
+        <div class="countdown-container flex flex-wrap gap-4">
+            <div class="countdown-item p-4 rounded-md">
+                <HolidayCountDown />
+            </div>
+        </div>
+    </div>
 </section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>
