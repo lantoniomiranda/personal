@@ -2,23 +2,20 @@
     import { onMount } from 'svelte';
     import type { Holiday } from '$lib/types/holiday.d';
 
-    export let holidays: Holiday[];
+    export let holidays: any;
 
     let countdown = '';
     let holidayName = '';
 
     function getNextHoliday(holidays: Holiday[]): Holiday | null {
-        console.log(holidays, 'holidays')
         const now = new Date();
         const futureHolidays: Holiday[] = holidays.filter(holiday => new Date(holiday.date) > now);
-        console.log(futureHolidays, 'future')
         if (futureHolidays.length === 0) return null;
         return futureHolidays.reduce((prev, curr) => (new Date(prev.date) < new Date(curr.date) ? prev : curr), futureHolidays[0]);
     }
 
     function updateCountdown() {
         const nextHoliday: Holiday | null = getNextHoliday(holidays);
-        console.log(nextHoliday);
         if (nextHoliday) {
             const now = new Date();
             const nextHolidayDate = new Date(nextHoliday.date);
@@ -47,7 +44,7 @@
 
 <section>
     <div class="rounded-md  p-4 text-center">
-        <div class="font-bold mb-2">Next Holiday: {holidayName}</div>
+        <div class="font-bold mb-2">{holidayName}</div>
         <div>{countdown}</div>
     </div>
 </section>
