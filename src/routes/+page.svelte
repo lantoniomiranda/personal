@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import HolidayCountDown from '$lib/components/HolidayCountDown.svelte';
 	import Quotes from '$lib/components/Quotes.svelte';
+	import WeekendCountDown from '$lib/components/WeekendCountDown.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -22,29 +23,15 @@
 </script>
 
 <section class="flex flex-col items-center justify-center min-h-screen">
-	<div class="w-full max-w-screen-xl animate-custom">
+	<div class="w-full max-w-screen-xl">
 		<Quotes {quotes} />
 	</div>
-	<div class="countdown-container flex flex-wrap gap-4">
-		<div class="countdown-item p-4 rounded-md">
+	<div class="flex flex-wrap gap-4">
+		<div class="p-4">
+			<WeekendCountDown />
+		</div>
+		<div class="p-4">
 			<HolidayCountDown {holidays} />
 		</div>
 	</div>
 </section>
-
-<style>
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  
-    .animate-custom {
-      animation: fadeIn 1s ease-in-out;
-    }
-  </style>
