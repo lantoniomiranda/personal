@@ -9,17 +9,17 @@
 
 	<nav class="flex-grow">
 		<ul class="flex justify-center gap-4">
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/" class="text-lg font-bold hover:text-orange-500">yo</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/me' ? 'page' : undefined}>
+			<li class={`text-lg font-bold hover:text-orange-500 ${$page.url.pathname === '/' ? 'text-orange-500' : ''}`}>
+				<a href="/">yo</a>
+			  </li>
+			<li class={`text-lg font-bold hover:text-orange-500 ${$page.url.pathname === '/me' ? 'text-orange-500' : ''}`}>
 				<a href="/me" class="text-lg font-bold hover:text-orange-500">me</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/projects' ? 'page' : undefined}>
-				<a href="/about" class="text-lg font-bold hover:text-orange-500">work</a>
+			<li class={`text-lg font-bold hover:text-orange-500 ${$page.url.pathname === '/work' ? 'text-orange-500' : ''}`}>
+				<a href="/work" class="text-lg font-bold hover:text-orange-500">work</a>
 			</li>
-			<li aria-current={$page.url.pathname.startsWith('/blog') ? 'page' : undefined}>
-				<a href="/blog" class="text-lg font-bold hover:text-orange-500">thoughts</a>
+			<li class={`text-lg font-bold hover:text-orange-500 ${$page.url.pathname === '/thoughts' ? 'text-orange-500' : ''}`}>
+				<a href="/thoughts" class="text-lg font-bold hover:text-orange-500">thoughts</a>
 			</li>
 		</ul>
 	</nav>
