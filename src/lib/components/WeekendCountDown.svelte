@@ -46,7 +46,7 @@
 
 <section>
 	<div class="rounded-md p-4 text-center">
-		<div class="font-bold mb-2">Next Weekend</div>
+		<div class="font-bold mb-2">Weekend</div>
 		<div>{countdown}</div>
 	</div>
 </section>
