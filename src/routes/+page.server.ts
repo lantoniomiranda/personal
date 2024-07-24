@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ params }) => {
     
     if(holidays) {
         return {
-            holidays: holidays
+            data: holidays
         }
     }
 
